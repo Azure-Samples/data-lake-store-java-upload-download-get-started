@@ -7,10 +7,7 @@ import com.microsoft.azure.datalake.store.IfExists;
 import com.microsoft.azure.datalake.store.oauth2.AzureADAuthenticator;
 import com.microsoft.azure.datalake.store.oauth2.AzureADToken;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,11 +48,13 @@ public class UploadDownloadApp {
 
             // Read File
             InputStream in = client.getReadStream(filename);
-            byte[] b = new byte[64000];
-            while (in.read(b) != -1) {
-                System.out.write(b);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ( (line = reader.readLine()) != null) {
+                System.out.println(line);
             }
-            in.close();
+            reader.close();
+            System.out.println();
 
             // get file metadata
             DirectoryEntry ent = client.getDirectoryEntry(filename);
@@ -105,7 +104,7 @@ public class UploadDownloadApp {
         System.out.format("Name: %s%n", ent.name);
         System.out.format("FullName: %s%n", ent.fullName);
         System.out.format("Length: %d%n", ent.length);
-        System.out.format("AclType: %s%n", ent.type.toString());
+        System.out.format("Type: %s%n", ent.type.toString());
         System.out.format("Group: %s%n", ent.group);
         System.out.format("User: %s%n", ent.user);
         System.out.format("Permission: %s%n", ent.permission);
