@@ -1,4 +1,3 @@
-
 ---
 services: data-lake-store
 platforms: java
