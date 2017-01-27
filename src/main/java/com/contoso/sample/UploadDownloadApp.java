@@ -4,8 +4,8 @@ import com.microsoft.azure.datalake.store.ADLException;
 import com.microsoft.azure.datalake.store.ADLStoreClient;
 import com.microsoft.azure.datalake.store.DirectoryEntry;
 import com.microsoft.azure.datalake.store.IfExists;
-import com.microsoft.azure.datalake.store.oauth2.AzureADAuthenticator;
-import com.microsoft.azure.datalake.store.oauth2.AzureADToken;
+import com.microsoft.azure.datalake.store.oauth2.AccessTokenProvider;
+import com.microsoft.azure.datalake.store.oauth2.ClientCredsTokenProvider;
 
 import java.io.*;
 import java.util.Arrays;
@@ -21,9 +21,9 @@ public class UploadDownloadApp {
 
     public static void main(String[] args) {
         try {
-            // Obtain OAuth2 token and use token to create client object
-            AzureADToken token = AzureADAuthenticator.getTokenUsingClientCreds(authTokenEndpoint, clientId, clientKey);
-            ADLStoreClient client = ADLStoreClient.createClient(accountFQDN, token);
+            // Create client object using client creds
+            AccessTokenProvider provider = new ClientCredsTokenProvider(authTokenEndpoint, clientId, clientKey);
+            ADLStoreClient client = ADLStoreClient.createClient(accountFQDN, provider);
 
             // create directory
             client.createDirectory("/a/b/w");
@@ -102,14 +102,14 @@ public class UploadDownloadApp {
 
     private static void printDirectoryInfo(DirectoryEntry ent) {
         System.out.format("Name: %s%n", ent.name);
-        System.out.format("FullName: %s%n", ent.fullName);
-        System.out.format("Length: %d%n", ent.length);
-        System.out.format("Type: %s%n", ent.type.toString());
-        System.out.format("Group: %s%n", ent.group);
-        System.out.format("User: %s%n", ent.user);
-        System.out.format("Permission: %s%n", ent.permission);
-        System.out.format("mtime: %s%n", ent.lastModifiedTime.toString());
-        System.out.format("atime: %s%n", ent.lastAccessTime.toString());
+        System.out.format("  FullName: %s%n", ent.fullName);
+        System.out.format("  Length: %d%n", ent.length);
+        System.out.format("  Type: %s%n", ent.type.toString());
+        System.out.format("  Group: %s%n", ent.group);
+        System.out.format("  User: %s%n", ent.user);
+        System.out.format("  Permission: %s%n", ent.permission);
+        System.out.format("  mtime: %s%n", ent.lastModifiedTime.toString());
+        System.out.format("  atime: %s%n", ent.lastAccessTime.toString());
         System.out.println();
     }
 
