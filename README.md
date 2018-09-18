@@ -4,9 +4,9 @@ platforms: java
 author: asikaria-msft
 ---
 
-# Azure Data Lake Store: Getting Started
+# Azure Data Lake Storage Gen1: Getting Started
 
-This sample demonstrates how to interact with Azure Data Lake Store service using the Java SDK. The sample walk through the three main steps:
+This sample demonstrates how to interact with the Azure Data Lake Storage Gen1 service using the Java SDK. The sample walks through the three main steps:
 - Acquire an Azure ActiveDirectory OAuth token
 - Create a client object
 - Use the methods on the client object to interact with the store
