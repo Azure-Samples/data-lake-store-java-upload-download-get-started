@@ -1,7 +1,11 @@
 ---
-services: data-lake-store
-platforms: java
-author: asikaria-msft
+page_type: sample
+languages:
+- java
+products:
+- azure
+description: "This sample demonstrates how to interact with the Azure Data Lake Storage Gen1 service using the Java SDK."
+urlFragment: data-lake-store-java-upload-download-get-started
 ---
 
 # Azure Data Lake Storage Gen1: Getting Started
